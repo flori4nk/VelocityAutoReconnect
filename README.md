@@ -5,7 +5,7 @@ Automatic reconnection for Velocity
 1. Download [the latest release](https://github.com/flori4nk/VelocityAutoReconnect/releases/latest).
 1. Upload it into the plugins directory of your instance of Velocity.
 1. Restart the proxy to load the plugin and create the configuration files.
-1. Configure the proxy and plugin as explained below.
+1. Configure the proxy and plugin as outlined below.
 1. Restart the proxy once again
 
 ## Configuration
@@ -36,6 +36,10 @@ After following the installation guide, edit the configuration file: ``plugins/v
 **limbo-name**
 * Default: limbo
 * Description: Name of the limbo server specified in the servers section of velocity.toml
+
+**directconnect-server**
+* Default: default
+* Description: Name of the server players should be connected to, if they directly connect to the Limbo server. This should be set to the name of your lobby / main server.
 
 #### Optional
 **task-interval-ms**

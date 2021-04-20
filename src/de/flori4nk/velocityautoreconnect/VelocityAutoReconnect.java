@@ -44,6 +44,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent.RedirectPlayer;
+import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -58,12 +59,13 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.0.0", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.0", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private final ProxyServer server;
 	private Logger logger;
 	private RegisteredServer limboServer;
+	private RegisteredServer directConnectServer;
 	private Map<Player, RegisteredServer> playerData;
 	private File configurationFile;
 	private Properties configuration;
@@ -87,6 +89,7 @@ public class VelocityAutoReconnect {
 			
 			// Set default values
 			configuration.setProperty("limbo-name", "limbo");
+			configuration.setProperty("directconnect-server", "default");
 			configuration.setProperty("task-interval-ms", "2500");
 			configuration.setProperty("kick-filter.blacklist", ".* ([Bb]anned|[Kk]icked).*");
 			configuration.setProperty("kick-filter.blacklist.enabled", "false");
@@ -104,7 +107,7 @@ public class VelocityAutoReconnect {
 			e.printStackTrace();
 		}
 		
-		// Compile whitelist / blacklist expressions from config
+		// Compile whitelist / blacklist Patterns from configured expressions
 		this.kickFilterBlacklist = Pattern.compile(configuration.getProperty("kick-filter.blacklist"), Pattern.DOTALL);
 		this.kickFilterWhitelist = Pattern.compile(configuration.getProperty("kick-filter.whitelist"), Pattern.DOTALL);
 	}
@@ -113,6 +116,8 @@ public class VelocityAutoReconnect {
 	public void onInitialize(ProxyInitializeEvent event) {
 		// Get Limbo server specified in config
 		this.limboServer = server.getServer(configuration.getProperty("limbo-name")).get();
+		// Get direct connect fallback server specified in config
+		this.directConnectServer = server.getServer(configuration.getProperty("directconnect-server")).get();
 		
 		// Schedule the reconnector task
 		server.getScheduler().buildTask(this, () -> {
@@ -188,12 +193,28 @@ public class VelocityAutoReconnect {
 				player.disconnect(kickReason);
 				return;
 			}
-
 			// Add player and previous server to the Map.
 			this.playerData.put(event.getPlayer(), event.getServer());
 			this.sendWelcomeMessage(player);
 		}
 	}
+	
+	/* Prevent the Limbo server from becoming the initial server.
+	 * This might happen as a result of direct connection when all other
+	 * servers are offline or the usage of plugins that set the initial server,
+	 * such as RememberMe.
+	 */
+	@Subscribe(order = PostOrder.LAST)
+	public void onChooseInitialServer(PlayerChooseInitialServerEvent event) {
+		// As this method will be called last, the initial server should be set, but, just in case, let's check anyway.
+		if(!event.getInitialServer().isPresent())
+			return;
+		
+		if(doServerNamesMatch(event.getInitialServer().get(), limboServer)) {
+			event.setInitialServer(this.directConnectServer);
+		}
+	}
+	
 	
 	/* Remove anyone who disconnects from the proxy from the playerData Map.
 	 * Note that Map.remove is an optional operation, so we don't need to check whether 
