@@ -61,7 +61,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.1", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.2", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private final ProxyServer server;
@@ -168,7 +168,7 @@ public class VelocityAutoReconnect {
 		 * servers are offline or the usage of plugins that set the initial server,
 		 * such as RememberMe.
 		 */
-		if(previousServer == null) {
+		if(previousServer == null && !this.playerData.containsKey(player)) {
 			previousServer = this.directConnectServer;
 		}
 		
