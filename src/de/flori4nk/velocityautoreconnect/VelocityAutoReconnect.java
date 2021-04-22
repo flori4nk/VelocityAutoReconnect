@@ -61,7 +61,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.1", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.2", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private final ProxyServer server;
@@ -169,7 +169,11 @@ public class VelocityAutoReconnect {
 		 * such as RememberMe.
 		 */
 		if(previousServer == null) {
-			previousServer = this.directConnectServer;
+			if(!this.playerData.containsKey(player)) {
+				previousServer = this.directConnectServer;
+			} else {
+				previousServer = this.playerData.get(player);
+			}
 		}
 		
 		// If a player gets redirected from Limbo to another server, remove them from the Map
