@@ -163,6 +163,15 @@ public class VelocityAutoReconnect {
 		
 		ServerConnection currentServerConnection = player.getCurrentServer().get();
 		
+		/* Set previousServer to directconnect-server if it's not set
+		 * This might happen as a result of direct connection when all other
+		 * servers are offline or the usage of plugins that set the initial server,
+		 * such as RememberMe.
+		 */
+		if(previousServer == null) {
+			previousServer = this.directConnectServer;
+		}
+		
 		// If a player gets redirected from Limbo to another server, remove them from the Map
 		if(doServerNamesMatch(previousServer, limboServer)) {
 			this.playerData.remove(player);
@@ -171,12 +180,7 @@ public class VelocityAutoReconnect {
 		
 		// If a player gets redirected to Limbo from another server, add them to the Map
 		if(doServerNamesMatch(currentServerConnection.getServer(), limboServer)) {
-			/* Set previousServer to directconnect-server if it's not set
-			 * This might happen as a result of direct connection when all other
-			 * servers are offline or the usage of plugins that set the initial server,
-			 * such as RememberMe.
-			 */
-			this.playerData.put(player, previousServer == null ? this.directConnectServer : previousServer);
+			this.playerData.put(player, previousServer);
 			this.sendWelcomeMessage(player);
 		}
 	}
