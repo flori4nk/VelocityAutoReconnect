@@ -156,13 +156,12 @@ public class VelocityAutoReconnect {
 		Player player = event.getPlayer();
 		RegisteredServer previousServer = event.getPreviousServer();
 		
-		// Check if necessary values are set
-		if(previousServer == null || !player.getCurrentServer().isPresent()) {
+		if(player.getCurrentServer().isPresent()) {
+			this.logger.info(String.format("Current server wasn't present for %s.", player.getUsername()));
 			return;
 		}
 		
 		ServerConnection currentServerConnection = player.getCurrentServer().get();
-		
 		
 		// If a player gets redirected from Limbo to another server, remove them from the Map
 		if(doServerNamesMatch(previousServer, limboServer)) {
@@ -172,7 +171,12 @@ public class VelocityAutoReconnect {
 		
 		// If a player gets redirected to Limbo from another server, add them to the Map
 		if(doServerNamesMatch(currentServerConnection.getServer(), limboServer)) {
-			this.playerData.put(player, event.getPreviousServer());
+			/* Set previousServer to directconnect-server if it's not set
+			 * This might happen as a result of direct connection when all other
+			 * servers are offline or the usage of plugins that set the initial server,
+			 * such as RememberMe.
+			 */
+			this.playerData.put(player, previousServer == null ? this.directConnectServer : previousServer);
 			this.sendWelcomeMessage(player);
 		}
 	}
@@ -205,22 +209,6 @@ public class VelocityAutoReconnect {
 			// Add player and previous server to the Map.
 			this.playerData.put(event.getPlayer(), event.getServer());
 			this.sendWelcomeMessage(player);
-		}
-	}
-	
-	/* Prevent the Limbo server from becoming the initial server.
-	 * This might happen as a result of direct connection when all other
-	 * servers are offline or the usage of plugins that set the initial server,
-	 * such as RememberMe.
-	 */
-	@Subscribe(order = PostOrder.LAST)
-	public void onChooseInitialServer(PlayerChooseInitialServerEvent event) {
-		// As this method will be called last, the initial server should be set, but, just in case, let's check anyway.
-		if(!event.getInitialServer().isPresent())
-			return;
-		
-		if(doServerNamesMatch(event.getInitialServer().get(), limboServer)) {
-			event.setInitialServer(this.directConnectServer);
 		}
 	}
 	
