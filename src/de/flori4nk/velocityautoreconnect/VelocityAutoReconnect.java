@@ -61,7 +61,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.0", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.1", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private final ProxyServer server;
@@ -156,7 +156,7 @@ public class VelocityAutoReconnect {
 		Player player = event.getPlayer();
 		RegisteredServer previousServer = event.getPreviousServer();
 		
-		if(player.getCurrentServer().isPresent()) {
+		if(!player.getCurrentServer().isPresent()) {
 			this.logger.info(String.format("Current server wasn't present for %s.", player.getUsername()));
 			return;
 		}
