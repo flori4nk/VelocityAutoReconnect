@@ -33,7 +33,9 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -89,7 +91,7 @@ public class VelocityAutoReconnect {
 			
 			// Set default values
 			configuration.setProperty("limbo-name", "limbo");
-			configuration.setProperty("directconnect-server", "default");
+			configuration.setProperty("directconnect-server", "lobby");
 			configuration.setProperty("task-interval-ms", "2500");
 			configuration.setProperty("kick-filter.blacklist", ".* ([Bb]anned|[Kk]icked).*");
 			configuration.setProperty("kick-filter.blacklist.enabled", "false");
@@ -115,9 +117,16 @@ public class VelocityAutoReconnect {
 	@Subscribe(order = PostOrder.NORMAL)
 	public void onInitialize(ProxyInitializeEvent event) {
 		// Get Limbo server specified in config
-		this.limboServer = server.getServer(configuration.getProperty("limbo-name")).get();
+		this.limboServer = getServerByName(configuration.getProperty("limbo-name"));
+		
 		// Get direct connect fallback server specified in config
-		this.directConnectServer = server.getServer(configuration.getProperty("directconnect-server")).get();
+		this.directConnectServer = getServerByName(configuration.getProperty("directconnect-server"));
+		
+		// If either server
+		if(this.limboServer == null || this.directConnectServer == null) {
+			this.server.getEventManager().unregisterListeners(this);
+			return;
+		}
 		
 		// Schedule the reconnector task
 		server.getScheduler().buildTask(this, () -> {
@@ -131,10 +140,10 @@ public class VelocityAutoReconnect {
 			
 			// Redirect the player, if possible.
 			if(previousServer != null) {
-				this.logger.info("Connecting " + nextPlayer.getUsername() + " to " + previousServer.getServerInfo().getName());
+				this.logger.info(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
 				nextPlayer.createConnectionRequest(previousServer).fireAndForget();
 			} else {
-				this.logger.severe("Previous server is null for: " + nextPlayer.getUsername() + "... disconnecting.");
+				this.logger.severe(String.format("Previous server is null for %s .. disconnecting.", nextPlayer.getUsername()));
 				nextPlayer.disconnect(Component.text("Previous server was null.").color(NamedTextColor.YELLOW));
 			}
 		})
@@ -235,6 +244,17 @@ public class VelocityAutoReconnect {
 		if(Boolean.valueOf(configuration.getProperty("message.enabled"))) {
 			player.sendMessage(Component.text(configuration.getProperty("message")));
 		}
+	}
+	
+	public RegisteredServer getServerByName(String serverName) {
+		Optional<RegisteredServer> optionalServer = server.getServer(configuration.getProperty("limbo-name"));
+		
+		if(optionalServer.isPresent()) {
+			return optionalServer.get();
+		}
+		
+		this.logger.severe(String.format("Server \"%s\" is invalid, VelocityAutoReconnect will not function!", serverName));
+		return null;
 	}
 	
 }
