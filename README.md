@@ -5,7 +5,7 @@ Automatic reconnection for Velocity
 1. Download [the latest release](https://github.com/flori4nk/VelocityAutoReconnect/releases/latest).
 1. Upload it into the plugins directory of your instance of Velocity.
 1. Restart the proxy to load the plugin and create the configuration files.
-1. Configure the proxy and plugin as outlined below.
+1. Configure the proxy, limbo server and plugin as outlined below.
 1. Restart the proxy once again
 
 ## Configuration
