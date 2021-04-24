@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -46,7 +45,6 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent.RedirectPlayer;
-import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -104,7 +102,7 @@ public class VelocityAutoReconnect {
 			configuration.load(new FileInputStream(configurationFile));
 			
 			// Save old values combined with possible new defaults
-			configuration.store(new FileOutputStream(configurationFile), "VelocityAutoReconnect configuration");
+			configuration.store(new FileOutputStream(configurationFile), "VelocityAutoReconnect configuration -- Documentation: https://github.com/flori4nk/VelocityAutoReconnect/blob/master/README.md#configuration");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
