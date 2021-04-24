@@ -1,4 +1,9 @@
 # VelocityAutoReconnect
+![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)
+![All releases download count](https://img.shields.io/github/downloads/flori4nk/VelocityAutoReconnect/total)
+![Latest release download count](https://img.shields.io/github/downloads/flori4nk/VelocityAutoReconnect/latest/total)
+![GitHub contributors](https://img.shields.io/github/contributors/flori4nk/VelocityAutoReconnect?color=brightgreen)
+
 Automatic reconnection for Velocity
 
 ## Installation
