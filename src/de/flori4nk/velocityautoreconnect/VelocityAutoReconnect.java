@@ -91,13 +91,14 @@ public class VelocityAutoReconnect {
 			// Set default values
 			configuration.setProperty("limbo-name", "limbo");
 			configuration.setProperty("directconnect-server", "lobby");
-			configuration.setProperty("task-interval-ms", "2500");
+			configuration.setProperty("task-interval-ms", "3500");
 			configuration.setProperty("kick-filter.blacklist", ".* ([Bb]anned|[Kk]icked).*");
 			configuration.setProperty("kick-filter.blacklist.enabled", "false");
 			configuration.setProperty("kick-filter.whitelist", "Server closed");
 			configuration.setProperty("kick-filter.whitelist.enabled", "true");
 			configuration.setProperty("message", "You will be reconnected soon.");
 			configuration.setProperty("message.enabled", "false");
+			configuration.setProperty("pingcheck", "true");
 			
 			// Load saved values
 			configuration.load(new FileInputStream(configurationFile));
@@ -139,13 +140,17 @@ public class VelocityAutoReconnect {
 			
 			// Redirect the player, if possible.
 			if(previousServer != null) {
-				try {
-				// Check if a server is online before connecting
-				previousServer.ping().thenRun(() -> {
-					this.logger.info(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
-					nextPlayer.createConnectionRequest(previousServer).fireAndForget();
-				}).join();
-				} catch(CompletionException exception) {}
+				// If enabled, check if a server responds to pings before connecting
+				if(Boolean.valueOf(this.configuration.getProperty("pingcheck"))) {
+					try {
+						previousServer.ping().join();
+					} catch(CompletionException exception) {
+						return;
+					}
+				}
+				
+				this.logger.info(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
+				nextPlayer.createConnectionRequest(previousServer).fireAndForget();
 			} else {
 				this.logger.severe(String.format("Previous server is null for %s .. disconnecting.", nextPlayer.getUsername()));
 				nextPlayer.disconnect(Component.text("Previous server was null.").color(NamedTextColor.YELLOW));
