@@ -60,7 +60,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.1.2", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.2.0", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private final ProxyServer server;
