@@ -72,6 +72,10 @@ After following the installation guide, edit the configuration file: ``plugins/v
 **message.enabled**
 * Default: false
 
+**pingcheck**
+* Default: true
+* Description: Whether VelocityAutoReconnect should check if a server responds to pings before trying to connect a player to it or not.
+
 ## Legal Notice
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
