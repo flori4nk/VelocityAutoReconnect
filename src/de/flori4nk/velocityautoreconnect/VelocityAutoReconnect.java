@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -138,8 +139,13 @@ public class VelocityAutoReconnect {
 			
 			// Redirect the player, if possible.
 			if(previousServer != null) {
-				this.logger.info(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
-				nextPlayer.createConnectionRequest(previousServer).fireAndForget();
+				try {
+				// Check if a server is online before connecting
+				previousServer.ping().thenRun(() -> {
+					this.logger.info(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
+					nextPlayer.createConnectionRequest(previousServer).fireAndForget();
+				}).join();
+				} catch(CompletionException exception) {}
 			} else {
 				this.logger.severe(String.format("Previous server is null for %s .. disconnecting.", nextPlayer.getUsername()));
 				nextPlayer.disconnect(Component.text("Previous server was null.").color(NamedTextColor.YELLOW));
