@@ -1,8 +1,8 @@
 ---
-name: Custom
-about: Use this, if you want to write an issue yourself
+name: Other (Blank)
+about: Use this, if other templates don't apply
 title: ''
-labels: ''
+labels: 'awaiting triage'
 assignees: ''
 
 ---
