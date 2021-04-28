@@ -49,7 +49,7 @@ import de.flori4nk.velocityautoreconnect.storage.PlayerManager;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.2.0", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.2.1", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private static ProxyServer proxyServer;
