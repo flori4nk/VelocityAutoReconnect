@@ -32,6 +32,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import com.google.inject.Inject;
+import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -70,22 +71,22 @@ public class VelocityAutoReconnect {
 	
 	@Subscribe(order = PostOrder.NORMAL)
 	public void onInitialize(ProxyInitializeEvent event) {
-		// Get Limbo server specified in config
-		limboServer = Utility.getServerByName(configurationManager.getProperty("limbo-name"));
+		EventManager eventManager = proxyServer.getEventManager();
 		
-		// Get direct connect fallback server specified in config
+		// Get Limbo server and direct connect server specified in config
+		limboServer = Utility.getServerByName(configurationManager.getProperty("limbo-name"));
 		directConnectServer = Utility.getServerByName(configurationManager.getProperty("directconnect-server"));
 		
 		// If either server is null, self-destruct
 		if(limboServer == null || directConnectServer == null) {
 			logger.severe("At least one of the specified servers is invalid, VelocityAutoReconnect will not function!");
-			proxyServer.getEventManager().unregisterListeners(this);
+			eventManager.unregisterListeners(this);
 			return;
 		}
 		
 		// Register listeners
-		proxyServer.getEventManager().register(this, new ConnectionListener());
-		proxyServer.getEventManager().register(this, new KickListener());
+		eventManager.register(this, new ConnectionListener());
+		eventManager.register(this, new KickListener());
 		
 		// Schedule the reconnector task
 		proxyServer.getScheduler().buildTask(this, () -> {
