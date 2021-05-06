@@ -1,5 +1,6 @@
 # VelocityAutoReconnect
 ![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)
+[![Latest Snaphsot](https://github.com/flori4nk/VelocityAutoReconnect/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/flori4nk/VelocityAutoReconnect/actions/workflows/maven.yml)
 ![All releases download count](https://img.shields.io/github/downloads/flori4nk/VelocityAutoReconnect/total)
 ![Latest release download count](https://img.shields.io/github/downloads/flori4nk/VelocityAutoReconnect/latest/total)
 ![GitHub contributors](https://img.shields.io/github/contributors/flori4nk/VelocityAutoReconnect?color=brightgreen)
