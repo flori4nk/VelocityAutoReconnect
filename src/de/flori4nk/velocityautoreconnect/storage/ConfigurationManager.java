@@ -56,6 +56,7 @@ public class ConfigurationManager {
 			this.properties.setProperty("message", "You will be reconnected soon.");
 			this.properties.setProperty("message.enabled", "false");
 			this.properties.setProperty("pingcheck", "true");
+			this.properties.setProperty("log.informational", "true");
 			
 			// Load saved values
 			this.properties.load(new FileInputStream(configurationFile));

@@ -50,11 +50,11 @@ import de.flori4nk.velocityautoreconnect.storage.PlayerManager;
 
 
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.2.1", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.3.0-SNAPSHOT", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 	
 	private static ProxyServer proxyServer;
-	private static Logger logger;
+	private static Logger logger;	
 	private static RegisteredServer limboServer;
 	private static RegisteredServer directConnectServer;
 	
@@ -109,7 +109,7 @@ public class VelocityAutoReconnect {
 						return;
 					}
 				}
-				logger.info(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
+				Utility.logInformational(String.format("Connecting %s to %s.", nextPlayer.getUsername(), previousServer.getServerInfo().getName()));
 				nextPlayer.createConnectionRequest(previousServer).connect();
 			} catch(CompletionException exception) {
 				// Prevent console from being spammed when a server is offline and ping-check is disabled

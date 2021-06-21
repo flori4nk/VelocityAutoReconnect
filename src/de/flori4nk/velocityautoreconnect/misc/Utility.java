@@ -56,5 +56,11 @@ public class Utility {
 		VelocityAutoReconnect.getLogger().severe(String.format("Server \"%s\" is invalid, VelocityAutoReconnect will not function!", serverName));
 		return null;
 	}
+	
+	public static void logInformational(String message) {
+		if(VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("log.informational")) {
+			VelocityAutoReconnect.getLogger().info(message);
+		}
+	}
 
 }
