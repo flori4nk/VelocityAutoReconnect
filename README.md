@@ -77,6 +77,10 @@ After following the installation guide, edit the configuration file: ``plugins/v
 * Default: true
 * Description: Whether VelocityAutoReconnect should check if a server responds to pings before trying to connect a player to it or not.
 
+**log.informational**
+* Default: true
+* Description: Whether or not to enable informational log messages, such as the messages printed upon reconnecting a player.
+
 ## Legal Notice
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
