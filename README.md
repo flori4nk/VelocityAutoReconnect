@@ -1,8 +1,6 @@
 # VelocityAutoReconnect
 ![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)
 [![Build Status](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/badge/icon)](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/)
-![All releases download count](https://img.shields.io/github/downloads/flori4nk/VelocityAutoReconnect/total)
-![Latest release download count](https://img.shields.io/github/downloads/flori4nk/VelocityAutoReconnect/latest/total)
 ![GitHub contributors](https://img.shields.io/github/contributors/flori4nk/VelocityAutoReconnect?color=brightgreen)
 
 Automatic reconnection for Velocity
