@@ -1,14 +1,21 @@
 # VelocityAutoReconnect
 [![License: GPLv3](https://img.shields.io/badge/License-GPLv3-brightgreen)](https://github.com/flori4nk/VelocityAutoReconnect/blob/master/LICENSE)
-[![Build Status](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/badge/icon)](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/)
+[![Release Build](https://img.shields.io/badge/Download-latest%20release-brightgreen)](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/lastStableBuild/)
+[![Dev Build](https://img.shields.io/badge/Download-latest%20snapshot-yellow)](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/lastBuild/)
 ![GitHub contributors](https://img.shields.io/github/contributors/flori4nk/VelocityAutoReconnect?color=brightgreen)
 
 A simple automatic reconnection plugin for Velocity.
 
 VelocityAutoReconnect is licensed under the GPLv3 license.
 
+## Note regarding CI
+[CI provided by CodeMC](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/)
+
+All development builds are automatically marked as unstable.
+The last stable build is always the latest release.
+
 ## Installation
-1. Download [the latest release](https://github.com/flori4nk/VelocityAutoReconnect/releases/latest).
+1. Download [the latest release](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/lastStableBuild/).
 1. Upload it into the plugins directory of your instance of Velocity.
 1. Restart the proxy to load the plugin and create the configuration files.
 1. Configure the proxy, limbo server and plugin as outlined below.
