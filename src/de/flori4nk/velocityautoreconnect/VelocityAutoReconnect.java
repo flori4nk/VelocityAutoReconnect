@@ -70,12 +70,11 @@ public class VelocityAutoReconnect {
 		EventManager eventManager = proxyServer.getEventManager();
 		
 		// Get Limbo server and direct connect server specified in config
-		limboServer = Utility.getServerByName(configurationManager.getProperty("limbo-name"));
-		directConnectServer = Utility.getServerByName(configurationManager.getProperty("directconnect-server"));
+		limboServer = Utility.getServerFromProperty("limbo-name");
+		directConnectServer = Utility.getServerFromProperty("directconnect-server");
 		
-		// If either server is null, self-destruct
+		// If either server is null, "self-destruct"
 		if(limboServer == null || directConnectServer == null) {
-			logger.severe("At least one of the specified servers is invalid, VelocityAutoReconnect will not function!");
 			eventManager.unregisterListeners(this);
 			return;
 		}
