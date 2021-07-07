@@ -39,7 +39,7 @@ public class Utility {
 	}
 		
 	public static RegisteredServer getServerByName(String serverName) {
-		Optional<RegisteredServer> optionalServer = VelocityAutoReconnect.getProxyServer().getServer(VelocityAutoReconnect.getConfigurationManager().getProperty("limbo-name"));
+		Optional<RegisteredServer> optionalServer = VelocityAutoReconnect.getProxyServer().getServer(serverName);
 			
 		if(optionalServer.isPresent()) {
 			return optionalServer.get();
@@ -47,6 +47,10 @@ public class Utility {
 			
 		VelocityAutoReconnect.getLogger().severe(String.format("Server \"%s\" is invalid, VelocityAutoReconnect will not function!", serverName));
 		return null;
+	}
+
+	public static RegisteredServer getServerFromProperty(String propertyName) {
+		return getServerByName(VelocityAutoReconnect.getConfigurationManager().getProperty(propertyName));
 	}
 	
 	public static void logInformational(String message) {
