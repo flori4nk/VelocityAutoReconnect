@@ -27,6 +27,8 @@ import com.velocitypowered.api.proxy.Player;
 import de.flori4nk.velocityautoreconnect.VelocityAutoReconnect;
 import de.flori4nk.velocityautoreconnect.misc.Utility;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TranslatableComponent;
 
 public class KickListener {
 
@@ -44,13 +46,20 @@ public class KickListener {
 		// Check whether the result of the kick actually was a redirection.
 		if(event.getResult() instanceof KickedFromServerEvent.RedirectPlayer) {
 			KickedFromServerEvent.RedirectPlayer playerRedirection = (RedirectPlayer) event.getResult();
+
+			if(!Utility.doServerNamesMatch(playerRedirection.getServer(), VelocityAutoReconnect.getLimboServer())) {
+				return;
+			}
+
 			Player player = event.getPlayer();
 			// Get the kick reason, when possible. Use an empty Component if the kick reason isn't present.
 			Component kickReason = event.getServerKickReason().isPresent() ? event.getServerKickReason().get() : Component.empty();
-			String kickReasonText = kickReason.toString();
-			
-			if(!Utility.doServerNamesMatch(playerRedirection.getServer(), VelocityAutoReconnect.getLimboServer())) {
-				return;
+			String kickReasonText;
+
+			if(kickReason instanceof TranslatableComponent) {
+				kickReasonText = ((TranslatableComponent) kickReason).key();
+			} else {
+				kickReasonText = ((TextComponent) kickReason).content();
 			}
 			
 			if(VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("kick-filter.whitelist.enabled") 
