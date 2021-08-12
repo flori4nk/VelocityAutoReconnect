@@ -52,6 +52,12 @@ public class KickListener {
 			}
 
 			Player player = event.getPlayer();
+
+			if(VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("bypasscheck")
+					&& player.hasPermission("velocityautoreconnect.bypass")) {
+				return;
+			}
+
 			// Get the kick reason, when possible. Use an empty Component if the kick reason isn't present.
 			Component kickReason = event.getServerKickReason().isPresent() ? event.getServerKickReason().get() : Component.empty();
 			String kickReasonText;

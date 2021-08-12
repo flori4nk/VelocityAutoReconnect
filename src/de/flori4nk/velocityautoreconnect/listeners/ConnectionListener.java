@@ -33,8 +33,12 @@ public class ConnectionListener {
 	@Subscribe(order = PostOrder.FIRST)
 	public void onPlayerPostConnect(ServerPostConnectEvent event) {
 		Player player = event.getPlayer();
+		if(VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("bypasscheck")
+				&& player.hasPermission("velocityautoreconnect.bypass")) {
+			return;
+		}
+
 		RegisteredServer previousServer = event.getPreviousServer();
-		
 		if(!player.getCurrentServer().isPresent()) {
 			VelocityAutoReconnect.getLogger().info(String.format("Current server wasn't present for %s.", player.getUsername()));
 			return;
@@ -42,7 +46,7 @@ public class ConnectionListener {
 		
 		ServerConnection currentServerConnection = player.getCurrentServer().get();
 		
-		/* Set previousServer to directconnect-server if it's not set
+		/* Set previousServer to directconnect-server if it's not set.
 		 * This might happen as a result of direct connection when all other
 		 * servers are offline or the usage of plugins that set the initial server,
 		 * such as RememberMe.
