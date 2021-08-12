@@ -37,7 +37,7 @@ public class ConnectionListener {
             return;
         }
 
-        if (!player.getCurrentServer().isPresent()) {
+        if (player.getCurrentServer().isEmpty()) {
             VelocityAutoReconnect.getLogger().severe(String.format("Current server wasn't present for %s.", player.getUsername()));
             return;
         }

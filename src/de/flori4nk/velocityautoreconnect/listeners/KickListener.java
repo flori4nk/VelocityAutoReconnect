@@ -81,7 +81,6 @@ public class KickListener {
             }
             // Add player and previous server to the Map.
             VelocityAutoReconnect.getPlayerManager().addPlayer(event.getPlayer(), event.getServer());
-            Utility.sendWelcomeMessage(player);
         }
     }
 }
