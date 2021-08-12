@@ -49,10 +49,20 @@ After following the installation guide, edit the configuration file: ``plugins/v
 * Description: Name of the server players should be connected to, if they directly connect to the Limbo server. This should be set to the name of your lobby / main server.
 
 #### Optional
+##### Reconnection Task
 **task-interval-ms**
 * Default: 2500
 * Description: Time between attempts to reconnect players
 
+**pingcheck**
+* Default: true
+* Description: Whether VelocityAutoReconnect should check if a server responds to pings before trying to connect a player to it.
+
+**exclusioncheck**
+* Default: false
+* Description: Whether VelocityAutoReconnect should not reconnect players with the ``velocityautoreconnect.bypass`` permission.
+
+##### Kick Filter
 **kick-filter.blacklist**
 * Default: .* ([Bb]anned|[Kk]icked).*
 * Description: If a kicked player falls back to the Limbo server and the reason matches this regular expression, they are disconnected.
@@ -67,6 +77,7 @@ After following the installation guide, edit the configuration file: ``plugins/v
 **kick-filter.whitelist.enabled**
 * Default: true
 
+##### Fallback Message
 **message**
 * Default: You will be reconnected soon.
 * Description: Welcome message sent to players joining the Limbo server
@@ -74,10 +85,7 @@ After following the installation guide, edit the configuration file: ``plugins/v
 **message.enabled**
 * Default: false
 
-**pingcheck**
-* Default: true
-* Description: Whether VelocityAutoReconnect should check if a server responds to pings before trying to connect a player to it or not.
-
+##### Logging
 **log.informational**
 * Default: true
 * Description: Whether or not to enable informational log messages, such as the messages printed upon reconnecting a player.
