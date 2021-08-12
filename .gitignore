@@ -1,5 +1,12 @@
+# Binaries
 bin/
 target/
+
+# Eclipse project files
 .settings/
 .project
 .classpath
+
+# IntelliJ IDEA project files
+VelocityAutoReconnect.iml
+.idea/
