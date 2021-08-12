@@ -58,7 +58,7 @@ After following the installation guide, edit the configuration file: ``plugins/v
 * Default: true
 * Description: Whether VelocityAutoReconnect should check if a server responds to pings before trying to connect a player to it.
 
-**exclusioncheck**
+**exclusioncheck** (>=1.3.x)
 * Default: false
 * Description: Whether VelocityAutoReconnect should not reconnect players with the ``velocityautoreconnect.bypass`` permission.
 
