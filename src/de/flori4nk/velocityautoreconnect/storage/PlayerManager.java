@@ -19,33 +19,53 @@ package de.flori4nk.velocityautoreconnect.storage;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import de.flori4nk.velocityautoreconnect.VelocityAutoReconnect;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.UUID;
+
 
 public class PlayerManager {
 
-    private final Map<Player, RegisteredServer> playerData;
+    private Deque<PlayerServerPair> playerQueue;
 
     public PlayerManager() {
-        this.playerData = new LinkedHashMap<>();
+        this.playerQueue = new ArrayDeque<>();
     }
 
-    public void addPlayer(Player player, RegisteredServer registeredServer) {
-        this.playerData.put(player, registeredServer);
+    public void queuePlayer(Player player, RegisteredServer registeredServer) {
+        this.playerQueue.add(new PlayerServerPair(player.getUniqueId(), registeredServer.getServerInfo().getName()));
     }
 
-    public void removePlayer(Player player) {
-        this.playerData.remove(player);
+    public void checkPriorityAndQueuePlayer(Player player, RegisteredServer registeredServer) {
+        if (player.hasPermission("velocityautoreconnect.priority")) {
+            this.playerQueue.addFirst(new PlayerServerPair(player.getUniqueId(), registeredServer.getServerInfo().getName()));
+        } else {
+            this.queuePlayer(player, registeredServer);
+        }
     }
 
-    public RegisteredServer getPreviousServer(Player player) {
-        return this.playerData.getOrDefault(player, VelocityAutoReconnect.getDirectConnectServer());
+    public PlayerServerPair next() {
+        return this.playerQueue.pollFirst();
     }
 
     public boolean isPlayerRegistered(Player player) {
-        return playerData.containsKey(player);
+        for (PlayerServerPair pair : this.playerQueue) {
+            if (pair.uuid.equals(player.getUniqueId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static class PlayerServerPair {
+        private final UUID uuid;
+        private final String serverID;
+
+        private PlayerServerPair(UUID uuid, String serverID) {
+            this.uuid = uuid;
+            this.serverID = serverID;
+        }
     }
 
 }
