@@ -51,7 +51,7 @@ After following the installation guide, edit the configuration file: ``plugins/v
 #### Optional
 ##### Reconnection Task
 **task-interval-ms**
-* Default: 2500
+* Default: 3500
 * Description: Time between attempts to reconnect players
 
 **pingcheck**
