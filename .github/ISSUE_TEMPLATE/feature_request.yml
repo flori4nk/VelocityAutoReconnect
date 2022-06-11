@@ -1,0 +1,26 @@
+name: Feature Request
+description: Suggest an idea for this project
+title: "A concise title"
+labels: ["enhancement", "awaiting triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the problem you have.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution
+      description: Describe the solution you'd like.
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots regarding your feature request here.
+    validations:
+      required: false
