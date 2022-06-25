@@ -44,9 +44,9 @@ public class ConfigurationManager {
             this.properties.setProperty("pingcheck", "true");
             this.properties.setProperty("bypasscheck", "false");
             this.properties.setProperty("kick-filter.blacklist", ".* ([Bb]anned|[Kk]icked).*");
-            this.properties.setProperty("kick-filter.blacklist.enabled", "false");
+            this.properties.setProperty("kick-filter.blacklist.enabled", "true");
             this.properties.setProperty("kick-filter.whitelist", "Server closed");
-            this.properties.setProperty("kick-filter.whitelist.enabled", "true");
+            this.properties.setProperty("kick-filter.whitelist.enabled", "false");
             this.properties.setProperty("message", "You will be reconnected soon.");
             this.properties.setProperty("message.enabled", "false");
             this.properties.setProperty("log.informational", "true");
