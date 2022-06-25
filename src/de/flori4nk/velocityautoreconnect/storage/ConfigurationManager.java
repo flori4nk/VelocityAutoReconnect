@@ -43,7 +43,7 @@ public class ConfigurationManager {
             this.properties.setProperty("task-interval-ms", "3500");
             this.properties.setProperty("pingcheck", "true");
             this.properties.setProperty("bypasscheck", "false");
-            this.properties.setProperty("kick-filter.blacklist", ".* ([Bb]anned|[Kk]icked).*");
+            this.properties.setProperty("kick-filter.blacklist", ".* ([Bb]anned|[Kk]icked|[Ww]hitelist).*");
             this.properties.setProperty("kick-filter.blacklist.enabled", "true");
             this.properties.setProperty("kick-filter.whitelist", "Server closed");
             this.properties.setProperty("kick-filter.whitelist.enabled", "false");
