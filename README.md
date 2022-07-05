@@ -1,4 +1,5 @@
 # VelocityAutoReconnect
+![Status: Passively Maintained](https://img.shields.io/badge/maintenance%20status-passively%20maintained-green)
 [![License: GPLv3](https://img.shields.io/badge/License-GPLv3-brightgreen)](https://github.com/flori4nk/VelocityAutoReconnect/blob/master/LICENSE)
 [![Release Build](https://img.shields.io/badge/Download-latest%20release-brightgreen)](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/lastStableBuild/)
 [![Dev Build](https://img.shields.io/badge/Download-latest%20snapshot-yellow)](https://ci.codemc.io/job/flori4nk/job/VelocityAutoReconnect/lastBuild/)
