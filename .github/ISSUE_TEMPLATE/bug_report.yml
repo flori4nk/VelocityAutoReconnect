@@ -64,5 +64,5 @@ body:
           required: true
         - label: I have filled out every required field in this form (including the title field).
           required: true
-        - label: I am not using an unsupported Velocity configuration (e.g. running hacky plugins that manipulate packets, such as ones dependent on Protocolize)
+        - label: I am not using an unsupported Velocity configuration (e.g. running hacky plugins that manipulate packets, such as ones dependent on Protocolize).
           required: true
