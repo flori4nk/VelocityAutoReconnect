@@ -91,7 +91,6 @@ public class VelocityAutoReconnect {
 
         EventManager eventManager = proxyServer.getEventManager();
 
-        // Get Limbo server and direct connect server specified in config
         limboServer = Utility.getServerFromProperty("limbo-name");
         directConnectServer = Utility.getServerFromProperty("directconnect-server");
 
@@ -101,7 +100,6 @@ public class VelocityAutoReconnect {
             return;
         }
 
-        // Register listeners
         eventManager.register(this, new ConnectionListener());
         eventManager.register(this, new KickListener());
 
@@ -110,15 +108,13 @@ public class VelocityAutoReconnect {
             Collection<Player> connectedPlayers = limboServer.getPlayersConnected();
             // Prevent NullPointerException when Limbo is empty
             if (connectedPlayers.isEmpty()) return;
-            // "Choose" the next player.
+            
             Player nextPlayer = connectedPlayers.iterator().next();
             RegisteredServer previousServer = playerManager.getPreviousServer(nextPlayer);
 
-            // Redirect the player, if possible.
             // If enabled, check if a server responds to pings before connecting
             try {
                 if (configurationManager.getBooleanProperty("pingcheck")) {
-                    // The nested try-catch is probably a horrible solution
                     try {
                         previousServer.ping().join();
                     } catch (CompletionException completionException) {
@@ -132,8 +128,8 @@ public class VelocityAutoReconnect {
                 // Prevent console from being spammed when a server is offline and ping-check is disabled
             }
         })
-                .repeat(configurationManager.getIntegerProperty("task-interval-ms"), TimeUnit.MILLISECONDS)
-                .schedule();
+            .repeat(configurationManager.getIntegerProperty("task-interval-ms"), TimeUnit.MILLISECONDS)
+            .schedule();
     }
 
 
