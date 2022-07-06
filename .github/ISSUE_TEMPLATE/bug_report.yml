@@ -37,6 +37,22 @@ body:
       render: shell
     validations:
       required: true
+  - type: textarea
+    id: velocityconfig
+    attributes:
+      label: Velocity Configuration
+      description: Please copy and paste your config file. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: plugins
+    attributes:
+      label: Velocity Plugins
+      description: Please list all other Velocity plugins you are running.
+      render: shell
+    validations:
+      required: true
   - type: checkboxes
     id: requirements_that_keep_me_sane
     attributes:
@@ -47,4 +63,6 @@ body:
         - label: I am using the latest version of VelocityAutoReconnect.
           required: true
         - label: I have filled out every required field in this form (including the title field).
+          required: true
+        - label: I am not using an unsupported Velocity configuration (e.g. running hacky plugins that manipulate packets, such as ones dependent on Protocolize)
           required: true
