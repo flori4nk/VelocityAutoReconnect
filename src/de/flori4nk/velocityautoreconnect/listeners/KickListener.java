@@ -57,6 +57,12 @@ public class KickListener {
             Component kickReason = event.getServerKickReason().isPresent() ? event.getServerKickReason().get() : Component.empty();
             String kickReasonText;
 
+            if (kickReason instanceof TranslatableComponent) {
+                kickReasonText = ((TranslatableComponent) kickReason).key();
+            } else {
+                kickReasonText = ((TextComponent) kickReason).content();
+            }
+
             if (player.getIdentifiedKey() != null) {
                 if (player.getIdentifiedKey().hasExpired()) {
                     player.disconnect(kickReason);
@@ -69,13 +75,7 @@ public class KickListener {
                     && player.hasPermission("velocityautoreconnect.bypass")) {
                 return;
             }
-
-            if (kickReason instanceof TranslatableComponent) {
-                kickReasonText = ((TranslatableComponent) kickReason).key();
-            } else {
-                kickReasonText = ((TextComponent) kickReason).content();
-            }
-
+            
             if (VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("kick-filter.whitelist.enabled")
                     && !this.kickFilterWhitelist.matcher(kickReasonText).matches()) {
                 player.disconnect(kickReason);
