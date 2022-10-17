@@ -40,7 +40,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.3.0-SNAPSHOT", authors = {"Flori4nK"})
+@Plugin(id = "velocityautoreconnect", name = "VelocityAutoReconnect", version = "1.2.4", authors = {"Flori4nK"})
 public class VelocityAutoReconnect {
 
     private static ProxyServer proxyServer;
