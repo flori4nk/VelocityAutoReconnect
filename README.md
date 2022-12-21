@@ -59,6 +59,10 @@ After following the installation guide, edit the configuration file: ``plugins/v
 * Default: true
 * Description: Whether VelocityAutoReconnect should check if a server responds to pings before trying to connect a player to it.
 
+**ping-worldloaded-check**
+* Default: true
+* Description: Whether VelocityAutoReconnect should prevent the flood of "Connecting name to server" messages during the "Preparing spawn area" phase of your lobby / main server loading by checking if the server is able to establish a connection.
+
 **bypasscheck** (>=1.3.0)
 * Default: false
 * Description: Whether VelocityAutoReconnect should not reconnect players with the ``velocityautoreconnect.bypass`` permission.
