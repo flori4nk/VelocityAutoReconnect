@@ -21,21 +21,26 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import de.flori4nk.velocityautoreconnect.VelocityAutoReconnect;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 
 import java.util.Optional;
 
 public class Utility {
 
-    // Returns whether or not the names of the servers match.
+    // Returns whether the names of the servers match.
     public static boolean doServerNamesMatch(RegisteredServer var0, RegisteredServer var1) {
         return var0.getServerInfo().getName().equals(var1.getServerInfo().getName());
     }
 
-    // Check whether or not the welcome message should be sent and act accordingly
+    // Check whether the welcome message should be sent and act accordingly
     public static void sendWelcomeMessage(Player player) {
-        if (VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("message.enabled")) {
-            player.sendMessage(Component.text(VelocityAutoReconnect.getConfigurationManager().getProperty("message")));
-        }
+        if (!VelocityAutoReconnect.getConfigurationManager().getBooleanProperty("message.enabled")) return;
+
+        // Get the message text from the config
+        var message = VelocityAutoReconnect.getConfigurationManager().getProperty("message");
+
+        // Try to deserialize message as JSON text, or use 'message' value as plain text
+        player.sendMessage(GsonComponentSerializer.gson().deserializeOr(message, Component.text(message)));
     }
 
     public static RegisteredServer getServerByName(String serverName) {

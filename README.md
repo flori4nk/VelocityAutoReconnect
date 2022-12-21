@@ -81,7 +81,7 @@ After following the installation guide, edit the configuration file: ``plugins/v
 ##### Fallback Message
 **message**
 * Default: You will be reconnected soon.
-* Description: Welcome message sent to players joining the Limbo server
+* Description: Welcome message sent to players joining the Limbo server. Can be a JSON Text Component.
 
 **message.enabled**
 * Default: false
