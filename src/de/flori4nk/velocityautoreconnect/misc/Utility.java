@@ -40,7 +40,7 @@ public class Utility {
         var message = VelocityAutoReconnect.getConfigurationManager().getProperty("message");
 
         // Try to deserialize message as JSON text, or use 'message' value as plain text
-        player.sendMessage(GsonComponentSerializer.gson().deserializeOr(message, Component.text(message)));
+        player.sendMessage(deserializeAsJson(message));
     }
 
     public static RegisteredServer getServerByName(String serverName) {
@@ -63,5 +63,18 @@ public class Utility {
             VelocityAutoReconnect.getLogger().info(message);
         }
     }
+
+	/**
+	 * Attempts to deserialize a string as a JSON component. If it is not a valid JSON component, it will be returned as a plain text component.
+	 * @param input The input string to deserialize.
+	 * @return The deserialized component.
+	 */
+	public static Component deserializeAsJson(String input) {
+		try {
+			return GsonComponentSerializer.gson().deserialize(input);
+		} catch (Exception e) {
+			return Component.text(input);
+		}
+	}
 
 }
