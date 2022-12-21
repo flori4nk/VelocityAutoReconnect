@@ -53,8 +53,8 @@ public class Utility {
         var subtitleText = cfgManager.getProperty("title-subtitle");
 
 		// Deserialize the title text values
-        Component mainTitle = GsonComponentSerializer.gson().deserializeOr(titleText, Component.text(titleText));
-        Component subtitle = GsonComponentSerializer.gson().deserializeOr(subtitleText, Component.text(subtitleText));
+        Component mainTitle = deserializeAsJson(titleText);
+        Component subtitle = deserializeAsJson(subtitleText);
 
 		// Show a title to a player
         player.showTitle(Title.title(mainTitle, subtitle));
@@ -80,5 +80,18 @@ public class Utility {
             VelocityAutoReconnect.getLogger().info(message);
         }
     }
+
+	/**
+	 * Attempts to deserialize a string as a JSON component. If it is not a valid JSON component, it will be returned as a plain text component.
+	 * @param input The input string to deserialize.
+	 * @return The deserialized component.
+	 */
+	public static Component deserializeAsJson(String input) {
+		try {
+			return GsonComponentSerializer.gson().deserialize(input);
+		} catch (Exception e) {
+			return Component.text(input);
+		}
+	}
 
 }
