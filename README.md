@@ -86,6 +86,17 @@ After following the installation guide, edit the configuration file: ``plugins/v
 **message.enabled**
 * Default: false
 
+**title-text**
+* Default: Welcome to Limbo!
+* Description: Welcome title message (shown at the center of the screen) sent to players joining the Limbo server. Can be a JSON Text Component.
+
+**title-subtitle**
+* Default: You will be reconnected soon.
+* Description: Subtitle for the `title-text` setting. Can be a JSON Text Component. Can be empty.
+
+**title.enabled**
+* Default: false
+
 ##### Logging
 **log.informational**
 * Default: true

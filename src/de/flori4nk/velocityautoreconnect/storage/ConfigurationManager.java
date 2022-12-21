@@ -49,6 +49,9 @@ public class ConfigurationManager {
             this.properties.setProperty("kick-filter.whitelist.enabled", "false");
             this.properties.setProperty("message", "You will be reconnected soon.");
             this.properties.setProperty("message.enabled", "false");
+            this.properties.setProperty("title-text", "Welcome to Limbo!");
+            this.properties.setProperty("title-subtitle", "You will be reconnected soon.");
+            this.properties.setProperty("title.enabled", "false");
             this.properties.setProperty("log.informational", "true");
 
             // Load saved values

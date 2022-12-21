@@ -67,6 +67,7 @@ public class ConnectionListener {
         if (Utility.doServerNamesMatch(currentServerConnection.getServer(), VelocityAutoReconnect.getLimboServer())) {
             VelocityAutoReconnect.getPlayerManager().addPlayer(player, previousServer);
             Utility.sendWelcomeMessage(player);
+            Utility.sendWelcomeTitleMessage(player);
         }
     }
 
