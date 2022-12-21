@@ -116,9 +116,17 @@ public class VelocityAutoReconnect {
             try {
                 if (configurationManager.getBooleanProperty("pingcheck")) {
                     try {
-                        previousServer.ping().join();
+                        // Check if server is up
+                        var pingResult = previousServer.ping().join();
+
+                        // This part of code can execute only if server responded with a ping.
+                        // We have to check if pingResult is not empty, because Minecraft server
+                        // actually responds to a pings even on the "Preparing spawn area" loading phase.
+                        // During that phase it is impossible to join the server to make sure that we
+                        // aren't flooding logs with the "Connecting someone to something" messages.
+                        if (configurationManager.getBooleanProperty("ping-worldloaded-check") && !(pingResult.getVersion() != null || pingResult.getPlayers().isPresent() || pingResult.getModinfo().isPresent() || pingResult.getDescriptionComponent() != null)) return;
                     } catch (CompletionException completionException) {
-                        // Server failed to respond to ping request, return to prevent spam
+                        // Server failed to respond to ping request, return to prevent flood
                         return;
                     }
                 }
